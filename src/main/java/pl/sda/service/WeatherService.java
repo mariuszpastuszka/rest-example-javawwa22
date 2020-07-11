@@ -20,4 +20,10 @@ public class WeatherService {
 
         return jsonWeather;
     }
+
+    public String getWeatherForCity(String city) {
+        String result = repository.readWeatherForCity(city);
+        log.info("city [{}] weather [{}]", city, result);
+        return result;
+    }
 }

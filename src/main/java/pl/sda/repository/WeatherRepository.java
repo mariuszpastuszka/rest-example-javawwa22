@@ -1,12 +1,14 @@
 package pl.sda.repository;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Repository
+@Slf4j
 public class WeatherRepository {
 
     private static final String LONDEK_CONNECTION_URL =
@@ -35,8 +37,19 @@ public class WeatherRepository {
                 "key", DEFAULT_KEY
         );
 
-        restTemplate.getForEntity(CONNECTION_URL, String.class, requestParams);
+        ResponseEntity<String> response = restTemplate.getForEntity(CONNECTION_URL, String.class, requestParams);
 //        restTemplate.getForEntity(CONNECTION_URL, String.class, city, DEFAULT_KEY);
-        return "";
+        log.info("response: [{}]", response);
+        log.info("response status: [{}]", response.getStatusCode());
+        response
+                .getHeaders()
+                .forEach((key, value) -> log.info("header key: [{}] - value: [{}]",
+                    key, value));
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody();
+        }
+
+        return "{}";
     }
 }

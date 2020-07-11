@@ -1,6 +1,7 @@
 package pl.sda.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -19,11 +20,15 @@ public class WeatherRepository {
 
     private static final String DEFAULT_KEY = "439d4b804bc8187953eb36d2a8c26a02";
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final String applicationKey;
 
 
-    public WeatherRepository(RestTemplate restTemplate) {
+    public WeatherRepository(final RestTemplate restTemplate,
+                             @Value("${weather.key}") final String applicationKey) {
         this.restTemplate = restTemplate;
+        this.applicationKey = applicationKey;
+        log.info("weather.key: [{}]", applicationKey);
     }
 
     public String readRawJson() {

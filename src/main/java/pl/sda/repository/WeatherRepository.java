@@ -25,6 +25,8 @@ public class WeatherRepository {
 
 
     public WeatherRepository(final RestTemplate restTemplate,
+//                             @Value("${WEATHER_KEY:no-key}") final String applicationKey) {
+//                             @Value("${WEATHER_KEY:null}") final String applicationKey) {
                              @Value("${weather.key}") final String applicationKey) {
         this.restTemplate = restTemplate;
         this.applicationKey = applicationKey;

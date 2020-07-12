@@ -1,11 +1,14 @@
 package pl.sda.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.domain.WeatherForecast;
 import pl.sda.service.WeatherService;
+
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -46,8 +49,12 @@ public class WeatherRestController {
     public ResponseEntity<WeatherForecast> saveWeatherForecast1(@RequestBody WeatherForecast objectToSave) {
         log.debug("object to save: [{}]", objectToSave);
         // saving object
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.LOCATION, "/weather-forecast/1");
 
-
-        return objectToSave;
+        ResponseEntity<WeatherForecast> responseEntity = new ResponseEntity<>(objectToSave,
+                headers,
+                HttpStatus.CREATED);
+        return responseEntity;
     }
 }

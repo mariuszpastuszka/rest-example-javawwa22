@@ -8,3 +8,7 @@ weather:
 corona:
   status:
     acive: ${CORONA_ACTIVE:true}
+
+logging:
+  level:
+    pl.sda: debug

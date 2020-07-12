@@ -2,6 +2,7 @@ package pl.sda.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.sda.domain.WeatherForecast;
 import pl.sda.repository.WeatherRepository;
 
 @Slf4j
@@ -25,5 +26,9 @@ public class WeatherService {
         String result = repository.readWeatherForCity(city);
         log.info("city [{}] weather [{}]", city, result);
         return result;
+    }
+
+    public WeatherForecast getWeatherForecastForCity(String city) {
+        return repository.readWeatherForecastForGivenCity(city);
     }
 }
